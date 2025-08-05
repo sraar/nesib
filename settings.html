@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Settings - Onesmos Nesib Academy</title>
+<link rel="stylesheet" href="css/style.css" />
+<style>
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 1rem;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+  }
+  .hamburger {
+    cursor: pointer;
+    width: 25px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .hamburger div {
+    background-color: white;
+    height: 3px;
+    border-radius: 2px;
+  }
+  nav {
+    display: none;
+    margin-top: 1rem;
+  }
+  nav.active {
+    display: block;
+  }
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .settings-option {
+    margin-top: 1.5rem;
+  }
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  input[type="checkbox"], select {
+    margin-right: 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <h1 data-i18n="settings_title">Settings</h1>
+</header>
+
+<nav id="nav-menu" aria-label="Main navigation">
+  <a href="student-dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+  <a href="login.html" data-i18n="nav_logout">Logout</a>
+</nav>
+
+<section class="settings-option">
+  <label>
+    <input type="checkbox" id="dark-mode-toggle" />
+    <span data-i18n="enable_dark_mode">Enable Dark Mode</span>
+  </label>
+</section>
+
+<section class="settings-option">
+  <label for="language-select" data-i18n="select_language">Select Language:</label>
+  <select id="language-select">
+    <option value="en">English</option>
+    <option value="om">Afaan Oromo</option>
+  </select>
+</section>
+
+<section class="settings-option">
+  <label>
+    <input type="checkbox" id="notifications-toggle" />
+    <span data-i18n="enable_notifications">Enable Notifications</span>
+  </label>
+</section>
+
+<section class="settings-option">
+  <button id="reset-password-btn" data-i18n="reset_password">Request Password Reset</button>
+</section>
+
+<script src="js/scripts.js"></script>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+  hamburger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navMenu.classList.toggle('active');
+    }
+  });
+
+  // Dark mode toggle
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  darkModeToggle.checked = document.body.classList.contains('dark');
+
+  darkModeToggle.addEventListener('change', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+  });
+
+  // Language select
+  const langSelect = document.getElementById('language-select');
+  langSelect.value = localStorage.getItem('language') || 'en';
+
+  langSelect.addEventListener('change', () => {
+    localStorage.setItem('language', langSelect.value);
+    location.reload();
+  });
+
+  // Notifications toggle (demo only)
+  const notificationsToggle = document.getElementById('notifications-toggle');
+  notificationsToggle.checked = localStorage.getItem('notifications') === 'true';
+
+  notificationsToggle.addEventListener('change', () => {
+    localStorage.setItem('notifications', notificationsToggle.checked);
+    alert(notificationsToggle.checked ? 'Notifications enabled' : 'Notifications disabled');
+  });
+
+  // Password reset request (demo)
+  const resetBtn = document.getElementById('reset-password-btn');
+  resetBtn.addEventListener('click', () => {
+    alert('Password reset requested. Please contact your admin.');
+  });
+
+  // Apply stored dark mode on page load
+  if(localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+  }
+</script>
+</body>
+</html>

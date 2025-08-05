@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Login - Onesmos Nesib Academy</title>
+<link rel="stylesheet" href="css/style.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .login-container {
+    background: var(--card-bg);
+    padding: 2rem 3rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 0.2);
+    width: 350px;
+    position: relative;
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+  }
+  label {
+    display: block;
+    margin: 0.75rem 0 0.3rem;
+  }
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    font-size: 1rem;
+    background: var(--input-bg);
+    color: var(--text);
+  }
+  input[type="text"]:focus, input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
+  }
+  button {
+    margin-top: 1.5rem;
+    width: 100%;
+    padding: 0.7rem;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #003d99;
+  }
+  .forgot-link {
+    display: block;
+    margin-top: 1rem;
+    text-align: right;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--primary);
+  }
+  .forgot-link:hover {
+    text-decoration: underline;
+  }
+  .login-info {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+  }
+  /* Dark mode variables */
+  body.dark {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --primary: #4dabf7;
+    --border: #333;
+    --input-bg: #2a2a2a;
+    --text: #eee;
+    --secondary-text: #bbb;
+  }
+  /* Light mode variables */
+  body {
+    --bg: #f9f9f9;
+    --card-bg: #fff;
+    --primary: #004080;
+    --border: #ccc;
+    --input-bg: #fff;
+    --text: #222;
+    --secondary-text: #555;
+  }
+
+  header {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary);
+  }
+  .controls {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+  }
+</style>
+</head>
+<body>
+<header>
+  ONESMOS NESIB ACADEMY
+</header>
+<div class="controls">
+  <select id="lang-select" aria-label="Select language">
+    <option value="en">English</option>
+    <option value="om">Afaan Oromo</option>
+  </select>
+  <button id="theme-toggle" aria-label="Toggle theme" style="margin-left:10px;">
+    <i class="fas fa-moon"></i>
+  </button>
+</div>
+
+<div class="login-container">
+  <h2 data-i18n="login_title">Login</h2>
+  <form id="login-form" action="#" method="post" autocomplete="off">
+    <label for="username" data-i18n="login_username_label">Username:</label>
+    <input type="text" id="username" name="username" required autocomplete="off" />
+
+    <label for="password" data-i18n="login_password_label">Password:</label>
+    <input type="password" id="password" name="password" required autocomplete="off" />
+
+    <button type="submit" data-i18n="login_button">Login</button>
+  </form>
+  <a href="#" class="forgot-link" data-i18n="forgot_password">Forgot Password?</a>
+  <p class="login-info" data-i18n="login_info"></p>
+</div>
+
+<script src="js/scripts.js"></script>
+<script>
+  // Student and admin users
+  const students = [
+    { name: "Abakabegna Teshome", grade: "12", username: "abakabegna", password: "pass123" },
+    { name: "Amanuel Tolessa", grade: "12", username: "amanuel.t", password: "pass123" },
+    { name: "Hunde Dereje", grade: "12", username: "hunde.d", password: "pass123" },
+    { name: "Zeyneb Fikrdin", grade: "12", username: "zeyneb.f", password: "pass123" },
+    { name: "Bontu Mulata", grade: "12", username: "bontu.m", password: "pass123" },
+    { name: "Marsimoi Abebe", grade: "12", username: "marsimoi.a", password: "pass123" },
+    { name: "Amanuel Kinfu", grade: "12", username: "amanuel.k", password: "pass123" },
+    { name: "Israel Mengstu", grade: "12", username: "israel.m", password: "pass123" }
+  ];
+
+  const adminUser = { username: "ona", password: "@266234300" };
+
+  const loginForm = document.getElementById('login-form');
+  const forgotLink = document.querySelector('.forgot-link');
+
+  loginForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const username = loginForm.username.value.trim();
+    const password = loginForm.password.value.trim();
+
+    if(username === adminUser.username && password === adminUser.password){
+      alert('Welcome Admin!');
+      // Redirect to admin dashboard
+      window.location.href = 'admin-dashboard.html';
+      return;
+    }
+
+    const student = students.find(s => s.username === username && s.password === password);
+    if(student){
+      alert(`Welcome, ${student.name}!`);
+      // Redirect to student dashboard with username param
+      window.location.href = 'student-dashboard.html?user=' + encodeURIComponent(student.username);
+    } else {
+      alert('Invalid username or password');
+    }
+  });
+
+  forgotLink.addEventListener('click', function(e){
+    e.preventDefault();
+    const username = prompt('Enter your username to reset password');
+    if(!username) return;
+
+    if(username === adminUser.username){
+      alert('Contact system administrator to reset admin password.');
+      return;
+    }
+
+    const student = students.find(s => s.username === username);
+    if(student){
+      alert(`Your current password is: ${student.password}\nIf you want to change it, contact admin.`);
+    } else {
+      alert('Username not found.');
+    }
+  });
+</script>
+</body>
+</html>

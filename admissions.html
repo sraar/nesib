@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admission - Onesmos Nesib Academy</title>
+<link rel="stylesheet" href="css/style.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+</head>
+<body>
+<header>
+  <div class="logo">ONESMOS NESIB ACADEMY</div>
+  <nav>
+    <ul>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="about.html" data-i18n="nav_about">About</a></li>
+      <li><a href="admission.html" data-i18n="nav_admission">Admission</a></li>
+      <li><a href="academic.html" data-i18n="nav_academic">Academics</a></li>
+      <li><a href="gallery.html" data-i18n="nav_gallery">Gallery</a></li>
+      <li><a href="news.html" data-i18n="nav_news">News</a></li>
+      <li><a href="registration.html" data-i18n="nav_registration">Registration</a></li>
+      <li><a href="login.html" data-i18n="nav_login">Login</a></li>
+      <li><a href="contact.html" data-i18n="nav_contact">Contact</a></li>
+      <li><a href="portal.html" data-i18n="nav_portal">Portal</a></li>
+    </ul>
+  </nav>
+  <div class="controls">
+    <select id="lang-select" aria-label="Select language">
+      <option value="en">English</option>
+      <option value="om">Afaan Oromo</option>
+    </select>
+    <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+  </div>
+</header>
+
+<main>
+  <h2 data-i18n="admission_title">Admission Requirements</h2>
+  <ul>
+    <li data-i18n="admission_req1">Completed primary school certificate</li>
+    <li data-i18n="admission_req2">Birth certificate</li>
+    <li data-i18n="admission_req3">Recent passport-sized photos</li>
+    <li data-i18n="admission_req4">Completed application form</li>
+  </ul>
+
+  <h3 data-i18n="admission_form_title">Apply Now</h3>
+  <form action="https://formspree.io/f/xgvznkel" method="POST">
+    <input type="text" name="fullname" placeholder="Full Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <select name="grade" required>
+      <option value="" disabled selected>Select Grade</option>
+      <option value="1">Grade 1</option>
+      <option value="2">Grade 2</option>
+      <option value="3">Grade 3</option>
+      <!-- Add more grades as needed -->
+      <option value="12">Grade 12</option>
+    </select>
+    <textarea name="notes" placeholder="Additional information" rows="4"></textarea>
+    <button type="submit" data-i18n="submit">Submit</button>
+  </form>
+</main>
+
+<footer>
+  <p>&copy; 2025 Onesmos Nesib Academy. All Rights Reserved.</p>
+</footer>
+
+<script src="js/scripts.js"></script>
+</body>
+</html>

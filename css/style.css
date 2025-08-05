@@ -1,0 +1,123 @@
+/* Variables for light and dark themes */
+:root {
+  --primary: #007bff;
+  --bg: #f9f9f9;
+  --text: #222;
+  --dark-bg: #1c1c1c;
+  --dark-text: #f9f9f9;
+  --header-bg: var(--primary);
+  --header-text: #fff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+body.dark {
+  background: var(--dark-bg);
+  color: var(--dark-text);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--header-bg);
+  color: var(--header-text);
+  padding: 10px 20px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li a {
+  color: var(--header-text);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+main {
+  padding: 30px 15px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px 40px 20px;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.counters {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 30px;
+}
+
+.counters div {
+  text-align: center;
+}
+
+.counters .count {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+footer {
+  background: var(--header-bg);
+  color: var(--header-text);
+  text-align: center;
+  padding: 15px 0;
+  margin-top: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  nav ul {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .hero h1 {
+    font-size: 2rem;
+  }
+  .counters {
+    flex-direction: column;
+    gap: 20px;
+  }
+}

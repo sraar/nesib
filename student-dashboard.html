@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Student Dashboard - Onesmos Nesib Academy</title>
+<link rel="stylesheet" href="css/style.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: var(--primary);
+    position: relative;
+  }
+  header h1 {
+    margin: 0;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+  }
+  .controls select, .controls button, .controls a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .controls a:hover {
+    text-decoration: underline;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  th, td {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  th {
+    background-color: var(--primary);
+    color: white;
+  }
+  .pass {
+    color: green;
+    font-weight: bold;
+  }
+  .fail {
+    color: red;
+    font-weight: bold;
+  }
+  /* Hamburger menu styles */
+  .hamburger {
+    cursor: pointer;
+    width: 25px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 15px;
+  }
+  .hamburger div {
+    background-color: var(--primary);
+    height: 3px;
+    border-radius: 2px;
+  }
+  nav {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1000;
+  }
+  nav.active {
+    display: block;
+  }
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  /* Dark mode variables */
+  body.dark {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --primary: #4dabf7;
+    --border: #333;
+    --input-bg: #2a2a2a;
+    --text: #eee;
+    --secondary-text: #bbb;
+  }
+  /* Light mode variables */
+  body {
+    --bg: #f9f9f9;
+    --card-bg: #fff;
+    --primary: #004080;
+    --border: #ccc;
+    --input-bg: #fff;
+    --text: #222;
+    --secondary-text: #555;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <h1 data-i18n="student_dashboard_title">Student Dashboard</h1>
+  <div class="controls">
+    <select id="lang-select" aria-label="Select language">
+      <option value="en">English</option>
+      <option value="om">Afaan Oromo</option>
+    </select>
+    <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+    <a href="settings.html" data-i18n="settings_title">Settings</a>
+  </div>
+  <nav id="nav-menu" aria-label="Main navigation">
+    <a href="student-dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="settings.html" data-i18n="settings_title">Settings</a>
+    <a href="login.html" data-i18n="nav_logout">Logout</a>
+  </nav>
+</header>
+
+<section>
+  <p><strong data-i18n="welcome_student">Welcome,</strong> <span id="student-name"></span></p>
+  <table aria-label="Grades Table">
+    <thead>
+      <tr>
+        <th data-i18n="subject">Subject</th>
+        <th data-i18n="first_mid">1st Mid (20)</th>
+        <th data-i18n="second_mid">2nd Mid (20)</th>
+        <th data-i18n="final_exam">Final Exam (60)</th>
+        <th data-i18n="total">Total (100)</th>
+      </tr>
+    </thead>
+    <tbody id="grades-table-body"></tbody>
+    <tfoot>
+      <tr>
+        <th colspan="4" style="text-align:right;" data-i18n="average_score">Average Score</th>
+        <th id="average-score"></th>
+      </tr>
+      <tr>
+        <th colspan="4" style="text-align:right;" data-i18n="result">Result</th>
+        <th id="result"></th>
+      </tr>
+    </tfoot>
+  </table>
+</section>
+
+<script src="js/scripts.js"></script>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+  hamburger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navMenu.classList.toggle('active');
+    }
+  });
+
+  // Students list to match username and name
+  const students = [
+    { name: "Abakabegna Teshome", grade: "12", username: "abakabegna" },
+    { name: "Amanuel Tolessa", grade: "12", username: "amanuel.t" },
+    { name: "Hunde Dereje", grade: "12", username: "hunde.d" },
+    { name: "Zeyneb Fikrdin", grade: "12", username: "zeyneb.f" },
+    { name: "Bontu Mulata", grade: "12", username: "bontu.m" },
+    { name: "Marsimoi Abebe", grade: "12", username: "marsimoi.a" },
+    { name: "Amanuel Kinfu", grade: "12", username: "amanuel.k" },
+    { name: "Israel Mengstu", grade: "12", username: "israel.m" }
+  ];
+
+  // Subjects list
+  const subjects = [
+    "Physics", "Maths", "Agriculture", "Afaan Oromo", "ICT", "Chemistry", "Biology", "English"
+  ];
+
+  // Utility: get URL parameter
+  function getQueryParam(param) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(param);
+  }
+
+  // Random score generator helper
+  function randomScore(max) {
+    return Math.floor(Math.random() * (max + 1));
+  }
+
+  // Find student by username from URL
+  const username = getQueryParam('user');
+  const student = students.find(s => s.username === username);
+
+  if(!student){
+    alert('Student not found or not logged in!');
+    window.location.href = 'login.html';
+  }
+
+  // Set student name in page
+  document.getElementById('student-name').textContent = student.name;
+
+  // Build grades table with random scores for demo
+  const tbody = document.getElementById('grades-table-body');
+
+  let totalSum = 0;
+  let subjectCount = subjects.length;
+
+  subjects.forEach(subject => {
+    const mid1 = randomScore(20);
+    const mid2 = randomScore(20);
+    const finalExam = randomScore(60);
+    const total = mid1 + mid2 + finalExam;
+
+    totalSum += total;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${subject}</td>
+      <td>${mid1}</td>
+      <td>${mid2}</td>
+      <td>${finalExam}</td>
+      <td>${total}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Calculate average and pass/fail
+  const average = (totalSum / (subjectCount * 100)) * 100; // percent
+  document.getElementById('average-score').textContent = average.toFixed(2);
+
+  const passMark = 60;
+  const resultEl = document.getElementById('result');
+  if(average >= passMark){
+    resultEl.textContent = 'Pass';
+    resultEl.classList.add('pass');
+    resultEl.classList.remove('fail');
+  } else {
+    resultEl.textContent = 'Fail';
+    resultEl.classList.add('fail');
+    resultEl.classList.remove('pass');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin Dashboard - Onesmos Nesib Academy</title>
+<link rel="stylesheet" href="css/style.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    color: var(--primary);
+    position: relative;
+  }
+  header h1 {
+    margin: 0;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+  }
+  .controls select, .controls button, .controls a {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 1rem;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .controls a:hover {
+    text-decoration: underline;
+  }
+  .hamburger {
+    cursor: pointer;
+    width: 25px;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 15px;
+  }
+  .hamburger div {
+    background-color: var(--primary);
+    height: 3px;
+    border-radius: 2px;
+  }
+  nav {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 10px;
+    z-index: 1000;
+  }
+  nav.active {
+    display: block;
+  }
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  /* Dark mode variables */
+  body.dark {
+    --bg: #121212;
+    --card-bg: #1e1e1e;
+    --primary: #4dabf7;
+    --border: #333;
+    --input-bg: #2a2a2a;
+    --text: #eee;
+    --secondary-text: #bbb;
+  }
+  /* Light mode variables */
+  body {
+    --bg: #f9f9f9;
+    --card-bg: #fff;
+    --primary: #004080;
+    --border: #ccc;
+    --input-bg: #fff;
+    --text: #222;
+    --secondary-text: #555;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu" tabindex="0">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <h1 data-i18n="admin_dashboard_title">Admin Dashboard</h1>
+  <div class="controls">
+    <select id="lang-select" aria-label="Select language">
+      <option value="en">English</option>
+      <option value="om">Afaan Oromo</option>
+    </select>
+    <button id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-moon"></i></button>
+    <a href="settings.html" data-i18n="settings_title">Settings</a>
+  </div>
+  <nav id="nav-menu" aria-label="Main navigation">
+    <a href="admin-dashboard.html" data-i18n="nav_dashboard">Dashboard</a>
+    <a href="settings.html" data-i18n="settings_title">Settings</a>
+    <a href="login.html" data-i18n="nav_logout">Logout</a>
+  </nav>
+</header>
+
+<main>
+  <p data-i18n="welcome_admin">Welcome, Admin!</p>
+  <!-- Admin tools and content go here -->
+</main>
+
+<script src="js/scripts.js"></script>
+<script>
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+  hamburger.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navMenu.classList.toggle('active');
+    }
+  });
+
+  // Set dark mode toggle button state
+  const darkModeToggle = document.getElementById('theme-toggle');
+  function updateThemeIcon() {
+    if(document.body.classList.contains('dark')){
+      darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    } else {
+      darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    }
+  }
+  updateThemeIcon();
+
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+    updateThemeIcon();
+  });
+
+  // Language selector
+  const langSelect = document.getElementById('lang-select');
+  langSelect.value = localStorage.getItem('language') || 'en';
+
+  langSelect.addEventListener('change', () => {
+    localStorage.setItem('language', langSelect.value);
+    location.reload();
+  });
+
+  // Apply stored dark mode on page load
+  if(localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark');
+    updateThemeIcon();
+  }
+</script>
+</body>
+</html>
